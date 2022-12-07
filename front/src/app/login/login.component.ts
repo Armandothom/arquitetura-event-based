@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       () => console.log('complete')
     );
 
-    subject.next({message: 'login', payload: {email: '', password: ''}});
+    subject.next({name: 'login', payload: {email: email, password: password}});
     subject.complete();
   }
 
