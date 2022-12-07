@@ -1,27 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { OnEvent } from '@nestjs/event-emitter';
-import { EventName } from 'src/models/events/event';
 import { LoginEvent } from 'src/models/events/login-event';
 import { AuthService } from 'src/services/auth.service';
-import { EventEmitter2 } from '@nestjs/event-emitter'
+import { UserSession } from 'src/models/user-session';
+import { LoginService } from 'src/services/login.service';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import { EventName } from 'src/models/events/event';
 
 @Injectable()
 export class LoginListener {
     constructor(
-        private readonly authService : AuthService,
+        private readonly loginService : LoginService,
         private readonly eventEmitter : EventEmitter2) {
 
     }
 
   @OnEvent(EventName.LOGIN)
-  handleLoginEvent(event: LoginEvent) {
+  handleLoginEvent(event: LoginEvent) : void {
     try {
-        const userSession = this.authService.login(event.payload.email, event.payload.password);
-        this.eventEmitter.emit(EventName.COMMAND_SUCCESS, userSession);
+        const userSession = this.loginService.handleLoginEvent(event);
+        this.eventEmitter.emit(EventName.COMMAND_SUCCESS, event.payload)
     } catch (error) {
-        if(error.code == 401) {
-            this.eventEmitter.emit(EventName.COMMAND_ERROR, error);
-        }
+        this.eventEmitter.emit(EventName.COMMAND_ERROR, {error, socketId : event.payload.socketId})
     }
   }
 }

@@ -1,6 +1,7 @@
 import { Event, EventName } from "./event";
+import { PayloadEvent } from "./payload-event";
 
-export class LoginPayload {
+export class LoginPayload extends PayloadEvent {
     email : string
     password : string
 }

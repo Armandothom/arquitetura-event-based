@@ -1,6 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { UserInfo } from 'os';
-import { User } from 'src/models/user';
 import { UserSession } from 'src/models/user-session';
 
 @Injectable()
