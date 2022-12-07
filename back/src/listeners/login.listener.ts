@@ -17,10 +17,13 @@ export class LoginListener {
   @OnEvent(EventName.LOGIN)
   handleLoginEvent(event: LoginEvent) : void {
     try {
+        event = new LoginEvent(event.name, event.payload)
         const userSession = this.loginService.handleLoginEvent(event);
-        this.eventEmitter.emit(EventName.COMMAND_SUCCESS, event.payload)
+        console.log(event)
+        this.eventEmitter.emit(EventName.COMMAND_SUCCESS, event)
     } catch (error) {
-        this.eventEmitter.emit(EventName.COMMAND_ERROR, {error, socketId : event.payload.socketId})
+        console.log(error)
+        this.eventEmitter.emit(EventName.COMMAND_ERROR, {error})
     }
   }
 }

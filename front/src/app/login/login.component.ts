@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { webSocket } from "rxjs/webSocket";
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-login',
@@ -8,29 +9,25 @@ import { webSocket } from "rxjs/webSocket";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  socket : Socket
   email = new FormControl('', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$')]);
   password = new FormControl('', Validators.required);
 
-  constructor() { }
+  constructor() { 
+    this.socket = new Socket({url : "http://localhost:3000"})
+    this.socket.fromEvent("events").subscribe((val : any) => {
+      console.log(val)
+    })
+  }
 
   ngOnInit(): void {
     
   }
 
   login() {
-    const subject = webSocket('ws://localhost:3000');
     const email = this.email.value as string;
     const password = this.password.value as string;
-
-    subject.subscribe(
-      msg => console.log('message received: ' + msg),
-      err => console.log(err),
-      () => console.log('complete')
-    );
-
-    subject.next({name: 'login', payload: {email: email, password: password}});
-    subject.complete();
+    this.socket.emit("events", {name: 'login', payload: {email: email, password: password}})
   }
 
 }

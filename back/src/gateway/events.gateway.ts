@@ -18,19 +18,21 @@ import { PayloadEvent } from 'src/models/events/payload-event';
   })
   export class EventsGateway {
 
-    constructor(private eventEmitter : EventEmitter2) {
-    }
-
     @WebSocketServer()
     server: Server;
   
+
+    constructor(private eventEmitter : EventEmitter2) {
+    }
+
     @SubscribeMessage('events')
     handleEventMessage(@MessageBody() data: Event<any>, @ConnectedSocket() socket : any): void {
-      this.eventEmitter.emit(data.name, {socketId : socket});
+      console.log(data.name)
+      this.eventEmitter.emit(data.name, data);
     }
 
     private sendMessage(data : Event<any>) {
-      this.server.emit(data.name, data.payload);
+      this.server.emit("events", data);
     }
 
     @OnEvent(EventName.COMMAND_SUCCESS)
