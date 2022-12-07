@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    const subject = webSocket('wss://localhost:3000');
+    const subject = webSocket('ws://localhost:3000');
     const email = this.email.value as string;
     const password = this.password.value as string;
 

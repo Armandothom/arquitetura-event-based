@@ -14,9 +14,7 @@ import { Event, EventName } from 'src/models/events/event';
 import { PayloadEvent } from 'src/models/events/payload-event';
   
   @WebSocketGateway({
-    cors: {
-      origin: '*',
-    },
+    cors: true,
   })
   export class EventsGateway {
 
