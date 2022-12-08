@@ -5,6 +5,7 @@ import { UserSession } from 'src/models/user-session';
 export class SessionManagerService {
     private sessions : Array<UserSession>;
     private delaySessionCheck : number = 5000;
+    
     constructor() {
         this.sessions = new Array();
         setInterval(() => {

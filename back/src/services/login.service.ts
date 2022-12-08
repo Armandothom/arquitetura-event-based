@@ -5,10 +5,7 @@ import { UserSession } from 'src/models/user-session';
 
 @Injectable()
 export class LoginService {
-    constructor(
-        private readonly authService : AuthService) {
-
-    }
+  constructor(private readonly authService : AuthService) {}
 
   handleLoginEvent(event: LoginEvent) : UserSession {
     try {

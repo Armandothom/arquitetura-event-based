@@ -1,21 +1,21 @@
 <div class="login-form" fxLayout="column" fxLayoutAlign="center">
-    <form>
-      <div>
-        <label for="email">Email:</label>
-        <input [formControl]="email" type="email" id="email" name="email" />
-        <div *ngIf="email.invalid && email.touched">
-          <p *ngIf="email.errors?.['required']">Email é necessário.</p>
-          <p *ngIf="email.errors?.['pattern']">Por favor insira um email válido.</p>
-        </div>
+  <form>
+    <div>
+      <label for="email">Email:</label>
+      <input [formControl]="email" type="email" id="email" name="email" />
+      <div *ngIf="email.invalid && email.touched">
+        <p *ngIf="email.errors?.['required']">Email é necessário.</p>
+        <p *ngIf="email.errors?.['pattern']">Por favor insira um email válido.</p>
       </div>
-      <div class="password-div">
-        <label for="password">Senha:</label>
-        <input [formControl]="password" type="password" id="password" name="password" />
-        <div *ngIf="password.invalid && password.touched">
-          <p *ngIf="password.errors?.['required']">Senha é necessária.</p>
-        </div>
+    </div>
+    <div class="password-div">
+      <label for="password">Senha:</label>
+      <input [formControl]="password" type="password" id="password" name="password" />
+      <div *ngIf="password.invalid && password.touched">
+        <p *ngIf="password.errors?.['required']">Senha é necessária.</p>
       </div>
-      <button type="button" (click)="login()">Login</button>
-    </form>
-  </div>
+    </div>
+    <button type="button" (click)="login()">Login</button>
+  </form>
+</div>
   

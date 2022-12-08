@@ -1,14 +1,10 @@
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import {
-  ConnectedSocket,
     MessageBody,
     SubscribeMessage,
     WebSocketGateway,
     WebSocketServer,
-    WsResponse,
   } from '@nestjs/websockets';
-  import { from, Observable } from 'rxjs';
-  import { map } from 'rxjs/operators';
   import { Server } from 'socket.io';
 import { Event, EventName } from 'src/models/events/event';
 import { PayloadEvent } from 'src/models/events/payload-event';
@@ -20,14 +16,11 @@ import { PayloadEvent } from 'src/models/events/payload-event';
 
     @WebSocketServer()
     server: Server;
-  
 
-    constructor(private eventEmitter : EventEmitter2) {
-    }
+    constructor(private eventEmitter : EventEmitter2) {}
 
     @SubscribeMessage('events')
-    handleEventMessage(@MessageBody() data: Event<any>, @ConnectedSocket() socket : any): void {
-      console.log(data.name)
+    handleEventMessage(@MessageBody() data: Event<any>): void {
       this.eventEmitter.emit(data.name, data);
     }
 

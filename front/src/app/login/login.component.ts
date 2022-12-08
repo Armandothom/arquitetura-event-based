@@ -15,19 +15,14 @@ export class LoginComponent implements OnInit {
 
   constructor() { 
     this.socket = new Socket({url : "http://localhost:3000"})
-    this.socket.fromEvent("events").subscribe((val : any) => {
-      console.log(val)
-    })
+    this.socket.fromEvent("events").subscribe(() => {})
   }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   login() {
     const email = this.email.value as string;
     const password = this.password.value as string;
     this.socket.emit("events", {name: 'login', payload: {email: email, password: password}})
   }
-
 }
